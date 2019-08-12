@@ -1,0 +1,52 @@
+<html>
+<head>
+	<script src="marked.min.js"></script>
+	<script src="underscore-min.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="/tooltip.js"></script>
+    <link rel="stylesheet" href="/styles.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationserif_regular_macroman/stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationsans_regular_macroman/stylesheet.css" type="text/css" />
+	<style type="text/css">
+	div {
+	   margin:20px;
+	}
+	</style>
+</head>
+<body>
+<h1 class="page-title">Settings</h1>
+<div style="text-align:right;display:inline-block;">
+	<div><input name="editable" type="checkbox"/> Editable</div>
+	   
+	<div>Email: <input name="username" type="text" placeholder="email"/></div>
+	<div>Password: <input name="password" type="password" placeholder="password"/></div>
+	<div><button>Submit</button></div>
+</div>
+<script>
+$(function(){
+	
+	
+	
+	var emailField = $("input[name=username]");
+	var passwordField = $("input[name=password]");
+	var editableField = $("input[name=editable]");
+	
+	
+	$.get("/settings").done(function(data){
+		editableField.prop('checked', data.editable);
+	});
+	
+	$("button").click(function(){
+		var data = {
+				email:emailField.val(),
+				password:passwordField.val(),
+				editable:editableField.is(":checked")
+		};
+		
+		$.post("/settings", JSON.stringify(data));
+	});
+	
+});
+</script>
+</body>
+</html>

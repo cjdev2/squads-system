@@ -1,0 +1,67 @@
+<html>
+<head>
+	<script src="marked.min.js"></script>
+	<script src="underscore-min.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="/tooltip.js"></script>
+    <link rel="stylesheet" href="/styles.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationserif_regular_macroman/stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationsans_regular_macroman/stylesheet.css" type="text/css" />
+	<style type="text/css">
+	.problem {
+	   font-weight:bold;
+	   color:red;
+	}
+	</style>
+</head>
+<body>
+<h1 class="page-title">Product Domain -> Constituency Alignment</h1>
+       <div id="chart_div"></div>
+   
+<script>
+
+$.ajax({url:"data.js", dataType:"json"})
+.fail(function( x, y, z){
+	console.log( y, z);
+})
+.done(function(data){
+	var squads = data.squads; //_.sortBy(data.squads, "label");
+
+	var allDomains = _.pluck(data.missions, "domain");
+	var allUnits = _.unique(_.flatten(_.pluck(allDomains, "businessUnits")));
+	
+	var body = $("body");
+	
+	function renderList(list){
+		var view = $("<ul>");
+		_.each(list, function(item){
+			view.append("<li>" + item + "</li>");
+		});
+		return view;
+	}
+	
+	var allUnitsAlphabetical = _.sortBy(allUnits, function(name){
+		return name.toLowerCase();
+	});
+	
+	body.append("<ul>");
+	_.each(allUnitsAlphabetical, function(unit){
+		var correspondingMissions = _.filter(data.missions, function(mission){
+			return mission.domain.businessUnits.indexOf(unit) != -1;
+		});
+		var label = $("<div>" + unit + "</div>");
+		if(correspondingMissions.length>1) label.addClass("problem");
+		
+		var listEntry = $("<li/>");
+		listEntry.append(label);
+		listEntry.append(renderList(_.pluck(correspondingMissions, "key")));
+		body.append(listEntry);
+		
+	});
+	body.append("</ul>");
+
+});
+
+</script>
+</body>
+</html>

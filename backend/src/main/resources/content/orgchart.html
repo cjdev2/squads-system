@@ -1,0 +1,185 @@
+<html>
+<head>
+	<script src="marked.min.js"></script>
+	<script src="underscore-min.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="/tooltip.js"></script>
+    <script src="/avatar.js"></script>
+    <link rel="stylesheet" href="/styles.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationserif_regular_macroman/stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationsans_regular_macroman/stylesheet.css" type="text/css" />
+	<style type="text/css">
+	.orgboundary{
+		margin: 20px;
+    	padding: 5px;
+    	text-align: center;
+    	vertical-align:top;
+	}
+	.nonmanager{
+	    width: 53px;
+        display: inline-block;
+	}
+	.manager{
+        display: inline-block;
+    	border:1px solid black;
+    	border-radius:5px;
+	}
+	.directmanager {
+	    vertical-align: top;
+	    width: 100px;
+    }
+    .person-name{
+      display:block;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .avatar{
+    	max-width:50px;
+    }
+    .nowrap {
+        overflow:scroll;
+        white-space:nowrap;
+    }
+    
+    .directmanager > .reports, .person {
+    	white-space:normal;
+    }
+    .supermanager > .reports {
+        /*white-space:nowrap;*/
+    }
+	</style>
+</head>
+<body class="nowrap">
+<h1 class="page-title">Engineering/Product Management Heirarchy</h1>
+       <div id="chart_div"></div>
+   
+<script>
+
+$.ajax({url:"data.js", dataType:"json"})
+.fail(function( x, y, z){
+	console.log( y, z);
+})
+.done(function(data){
+	var squads = data.squads; //_.sortBy(data.squads, "label");
+
+	var everyone = data.people;
+	function getPersonByName(name){
+		var person = _.find(everyone, function(p){
+			return p.name === name;
+		});
+		
+		return person;
+	}
+	var roots = [];
+	
+	_.each(everyone, function(person){
+		var leadName = person.lead
+		var lead = getPersonByName(leadName);
+		if(!lead) roots.push(person);
+	});
+
+	function addReports(lead){
+		_.each(everyone, function(person){
+			if(person.lead === lead.name){
+				if(!lead.reports) lead.reports = [];
+				
+				console.log(person.name + " reports to " + lead.name);
+				lead.reports.push(person);
+			}
+			
+		});
+		
+		_.each(lead.reports, addReports);
+	}
+	
+	_.each(roots, addReports);
+	
+	console.log(roots);
+	
+	function directReports(person){
+		var reports = _.filter(everyone, function(n){
+			return n.lead === person.name;
+		});
+		
+		return reports;
+	}
+	
+	function allReports(person){
+		var directs = directReports(person);
+		console.log('directs', directs);
+		var indirects = _.map(directs, allReports);
+		var all = _.flatten(_.union(directs, indirects));
+		
+		return all;
+	}
+	
+	function renderPerson(person){
+		var view = $('<div class="orgboundary" ></div>')
+		renderAvatar(person, view);
+		view.append('<div class="reports"></div>');
+		var avatar = view.find(".avatar"); 
+		var reportsDiv = view.find(".reports");
+		view.find(".person-name").text(person.name);
+		avatar.attr('src', '/people/' + person.name + '/logo');
+		
+
+		function addDragDropEvents(element){
+			element.on("dragenter", function(e){
+				//console.log("dragenter", idx);
+				view.addClass("drophover");
+			});
+			element.on("dragleave", function(e){
+				//console.log("dragleave", idx);
+				view.removeClass("drophover");
+			});
+
+			element.on("dragover", function(e){
+				//console.log("dragover", idx);
+				e.preventDefault();
+				view.addClass("drophover");
+			});
+			element.on("drop", function(e){
+				var movedPerson = JSON.parse(e.originalEvent.dataTransfer.getData("person"));
+				e.originalEvent.preventDefault();
+				var change = {who:movedPerson.name, maybeNewLead:person.name};
+				$.post("/moves", JSON.stringify(change));
+				window.location.reload();
+			});
+		}
+		addDragDropEvents(avatar);
+		
+		
+		
+		makeTooltip(avatar, person.name + " (" + person.chapter + ", " + person.lead + ") (" + person.location + ") (" + directReports(person).length + " direct, " + allReports(person).length + " indirect reports)");
+		
+		var grandchildren = _.flatten(_.map(person.reports, function(report){
+			var s = report.reports
+			if(!s) s = []
+			return s;
+		}));
+		console.log("GRands for " + person.name, grandchildren);
+		
+		if(person.reports && person.reports.length>0){
+			view.addClass("manager");
+			if(grandchildren.length>0){
+				view.addClass("supermanager");
+			}else{
+				view.addClass("directmanager");
+			}
+		}else{
+			view.addClass("nonmanager");
+		}
+		
+		_.each(person.reports, function(report){
+			reportsDiv.append(renderPerson(report));
+		});
+		return view;
+	}
+	_.each(roots, function(root){
+		$("body").append(renderPerson(root));
+	});
+});
+
+</script>
+</body>
+</html>

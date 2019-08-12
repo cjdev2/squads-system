@@ -1,0 +1,43 @@
+<html>
+<head>
+	<script src="marked.min.js"></script>
+	<script src="underscore-min.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="/tooltip.js"></script>
+    <script src="/avatar.js"></script>
+	<link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="web fonts/liberationserif_regular_macroman/stylesheet.css" type="text/css"/>
+    <link rel="stylesheet" href="web fonts/liberationsans_regular_macroman/stylesheet.css" type="text/css"/>
+
+</head>
+<body>
+	<div class="header">
+		<h1>
+			<span class="page-title">Engineering/Product Structure</span> 
+			<span class="main-menu">
+				<a href="/orgchart"><img class="main-menu-item" src="/heirarchy.png"/></a>
+				<a href="/constituencies"><img class="main-menu-item" src="/constituencies.png"/></a>
+				<a href="/locations"><img class="main-menu-item" src="/buildings.png"/></a>
+				<img class="alumni-bucket main-menu-item" class=""src="/alumni.png"/>
+				<input class="real-people-checkbox" type="checkbox"/>Only Real People
+				<input class="faces-checkbox"type="checkbox"/>No Faces
+			</span>
+		</h1>
+	</div>
+	<h2>Shared People</h2>
+	<div class="dugout"></div>
+	<h2>Squads / Chapters
+	
+	<select class="sort-select">
+		<option>name</option>
+		<option>location</option>
+		<option>size</option>
+		<option>awesomeness</option>
+	</select>
+	</h2>
+	<div style="text-align:center;">
+		<div class="squads"></div>
+	</div>
+	<script src="/diagram.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+target
+.classpath
+.project
+.settings
+.cache
+*.swp
+.cache-main
+*~
+.idea
+*.iml
+/data
+.DS_Store

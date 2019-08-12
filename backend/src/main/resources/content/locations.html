@@ -1,0 +1,99 @@
+<html>
+<head>
+	<script src="marked.min.js"></script>
+	<script src="underscore-min.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="/tooltip.js"></script>
+    <link rel="stylesheet" href="/styles.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationserif_regular_macroman/stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="web fonts/liberationsans_regular_macroman/stylesheet.css" type="text/css" />
+	<style type="text/css">
+	.problem {
+	   font-weight:bold;
+	   color:red;
+	}
+	</style>
+</head>
+<body>
+<h1 class="page-title">Locations</h1>
+       <div id="chart_div"></div>
+   
+<script>
+
+function mkString(list, separator){
+	var str = "";
+	_.each(list, function(item){
+		if(str != ""){
+			str += separator;
+		}
+		str += item;
+	});
+	return str;
+}
+
+$.ajax({url:"data.js", dataType:"json"})
+.fail(function( x, y, z){
+	console.log( y, z);
+})
+.done(function(data){
+
+	function isChapter(type){
+		return function (person){
+			return person.chapter === type;
+		}
+	}
+	function membersOfChapters(everyone){
+		return _.flatten(_.map(arguments, function(chapter){
+			return _.filter(everyone, isChapter(chapter));
+		}));
+	}
+	
+	var engineers = membersOfChapters(data.people, "operations", "apis", "security", "dba", "cognos", "big-data-tools", "web-tools");
+	
+	var peopleByLocation = _.groupBy(data.people, "location");
+	
+	var body = $("body");
+	
+	function renderList(list){
+		var view = $("<ul>");
+		_.each(list, function(item){
+			view.append("<li>" + item + "</li>");
+		});
+		return view;
+	}
+	body.append("<ul>");
+	_.each(peopleByLocation, function(people, location){
+		var listEntry = $("<li/>");
+		
+
+		var peopleByChapter = _.groupBy(people, "chapter");
+		
+		listEntry.append(location + " - " + people.length + " overall " + " (");
+		var foo = _.map(peopleByChapter, function(people, chapter){
+			return people.length + " " + chapter;
+		});
+		
+		listEntry.append(mkString(foo, ", "));
+		
+		listEntry.append(")");
+		
+		var fullNames = _.map(_.sortBy(people, "last"), function(person){
+			if(person.last && person.first){
+				return person.last + ", " + person.first;
+			}else{
+				return person.name;
+			}
+		});
+		
+		
+		listEntry.append(renderList(fullNames));
+		body.append(listEntry);
+		
+	});
+	body.append("</ul>");
+
+});
+
+</script>
+</body>
+</html>

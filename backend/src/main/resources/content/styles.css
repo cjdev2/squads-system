@@ -1,0 +1,279 @@
+ h, div, p, span {
+     font-family: 'LiberationSerif', serif;
+ }
+ 
+ body {
+ 	margin:0px;
+ 	padding:0px;
+ 	/* width: 100%; */
+ }
+ 
+ .body {
+   font-family: 'Lora', serif; 
+   line-height: 22px;
+  }
+
+  li img {
+     width:10px;
+     height:10px;
+  }
+  
+  .header {
+  	margin:5px;
+  }
+  
+  .dugout {
+  	text-align:center;
+  }
+  .people, .squad {/* width:120px; */}
+  .people {
+    /* display:inline-block; */
+    display: flex;
+    padding: 5px;
+  }
+  .squad {
+     border-top: 2px solid grey;
+     /* margin:5px; */
+     /* display:inline-block; */
+     padding:5px;
+     /* border-radius:5px; */
+     /*height:300px;*/
+  }
+  .avatar img {
+     width:50px;
+     height:50px;
+     border:1px solid white;
+     border-radius:5px;
+     border-color:grey;
+     vertical-align: middle;
+  }
+  .avatar .name {
+    max-width: 50px;
+    max-height: 25px;
+    display: inline-block;
+    vertical-align: baseline;
+    font-weight:normal;
+    font-size: 8pt;
+    margin-top:3px;
+    text-transform: initial;
+    width: 100%;
+  }
+  
+  .avatar {
+     width:50px;
+     height:77px;
+     display:inline-block;
+     margin:2px;
+	 border:1px solid white;
+  }
+  
+  .person {
+     background:white;
+     vertical-align:top;
+  }
+  
+  .placeholder {
+     opacity:0;
+  }
+  .tier {
+     border-right:2px solid grey;
+     /* padding:2px; */
+     display: inline-block;
+     width: 71px;
+     /* height: min-content; */
+     vertical-align: top;
+     text-align: center;
+  }
+  
+  .labelsquad {
+  	top:0;
+  	position:sticky;
+  	background:white;
+  	opacity:100%;
+  }
+  .labelsquad .tier {
+  	text-align:right;
+  	position:relative;
+  }
+  .labelsquad, .labelsquad .tier{
+  	border-color:white;
+  }
+  
+  .name {
+    /* height: 79px; */
+    /* font-weight: bold; */
+    cursor: pointer;
+    font-family: sans-serif;
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+  
+  .page-title {
+    font-family: 'LiberationSans', sans-serif;
+    font-size:20pt;
+    padding:10px;
+  }
+  .label {
+  	/* display: inline-block; */
+  	/* white-space: nowrap; */
+  	vertical-align: top;
+  	/* width: 407px; */
+  }
+  
+  .squad, .people, .drawer, .name {
+     vertical-align: text-top;
+     /* width: 100px; */
+      
+  }
+ 
+  .drawer {
+  	clear:left;
+  	display:block;
+  	width:100%;
+  	overflow:auto;
+  	margin-top:15px;
+  	margin-bottom:15px;
+  	padding:5px;
+  	text-align: left;
+  }
+  /*
+  .feature-squad .name{
+    color: #00AF66;
+  }
+  .infrastructure-squad .name{
+    color: rgba(210, 136, 0, 0.21);
+  }
+  */
+  
+.tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px Arial;
+}
+
+
+.squad.maximized {
+    display:block;
+    width:initial;
+    height:initial;
+}
+.people.maximized {
+   position:absolute;
+
+}
+.drawer.maximized {
+    height:initial;
+    width:initial;
+    overflow:initial;
+    margin-left:120px;
+}
+.squad:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.warning-icon {
+	width:18px;
+	height:18px;
+	margin:5px;
+	cursor:pointer;
+}
+
+.drophover {
+	
+	/*border: 5px solid grey;*/
+	background:grey;
+}
+.main-menu {
+	font-size:12pt;
+	font-weight:normal;
+	font-family:sans-serif;
+	float:right;
+}
+
+.main-menu-item {
+	width:20px;
+	height:20px;
+	display:inline;
+}
+  .needed {
+    background:yellow;
+  }
+  
+  h2 {
+  width: 100%;
+  background: grey;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  }
+    
+.badge-holder {
+  display: block;
+  height: 25px;
+  position: absolute;
+  border: 0px;
+  text-align: right;
+  margin-top: 30px;
+}
+  
+.badge-holder .badge {
+  width: 15px;
+  height: 15px;
+  border: 1px solid grey;
+  padding: 2px;
+  background: white;
+}
+
+.highlighted {
+	background:red;
+	border:1px solid red;
+}
+
+.highlighted img {
+	opacity: 3;
+}
+
+div.squads {
+    /* white-space: nowrap; */
+    width:900px;
+    display:inline-block;
+}
+div {
+}
+
+.email-squad-button img {
+    height: 2em;
+    float: right;
+    margin-right: 20px;
+}
+
+.people .name{
+    display: inline-block;
+    width: 150px;
+}
+
+.chapter-name {
+	
+    cursor: pointer;
+    font-family: sans-serif;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 15px;
+}
+
+.sort-select {
+    float: right;
+    margin: 5px;
+    vertical-align: middle;
+}
