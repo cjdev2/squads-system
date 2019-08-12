@@ -1,3 +1,3 @@
-# Squads App
+# Squads System
 
-The Squads app is a tool for defining, visualizing and analyzing a spotify-style product+engineering organziation.
+The Squads system is a set of tools for defining, visualizing and analyzing a spotify-style product engineering organziation.
