@@ -1,0 +1,38 @@
+{
+  "chapters": [
+    {
+    "name":"frontend",
+    "lead":"mary"
+    }
+  ],
+  "squads": [{
+    "id": "a",
+    "aliases":[],
+    "location":"sunnytown",
+    "people":["mary"],
+    "lead": "mary",
+    "missions":["customer-profiles"],
+    "label": "standard"
+  }],
+  "people": [{
+    "name": "mary",
+    "kind":"person",
+    "first": "Mary",
+    "last": "Smith",
+    "title": "Squad Lead",
+    "chapter": "Frontend Chapter",
+    "lead" :  "frank",
+    "location":"sunnytown"
+  }],
+  "missions": [{
+    "key": "customer-profiles",
+    "name": "Customer Profiles",
+    "label": "standard",
+    "aliases": [],
+    "domain": {
+      "existingFeatures": [],
+      "existingArchitecture": [],
+      "businessUnits": []
+    }
+  }]
+}

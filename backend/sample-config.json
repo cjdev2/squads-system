@@ -1,0 +1,12 @@
+{
+
+  "pathToAvatarCache":"sample-data/cache",
+  "avatarSources": [],
+  "pathToOrgData":"sample-data/org.json",
+  "pathToMissionDescriptions":"sample-data/missions",
+  "emailSuffix":"xyz.com",
+  "ldapAuth":{
+
+  },
+  "httpPort":8889
+}
