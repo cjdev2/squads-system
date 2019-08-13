@@ -1,0 +1,42 @@
+{
+  "name": "squads-web2",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@mdi/js": "^3.5.95",
+    "@mdi/react": "^1.1.0",
+    "@reach/router": "^1.2.1",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1",
+    "morgan": "^1.9.1",
+    "polished": "^3.2.0",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.26.1",
+    "react": "^16.8.6",
+    "react-async-hook": "^1.0.0",
+    "react-beautiful-dnd": "^10.1.1",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^2.1.8",
+    "react-tooltip": "^3.10.0",
+    "styled-components": "^4.2.0",
+    "styled-is": "^1.2.2",
+    "styled-normalize": "^8.0.6"
+  },
+  "scripts": {
+    "start": "REACT_APP_GIT_HASH=$(git rev-parse HEAD) react-scripts start",
+    "build": "REACT_APP_GIT_HASH=$(git rev-parse HEAD) react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "node ./server.js"
+  },
+  "proxy": "http://localhost:8889",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
